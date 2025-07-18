@@ -1,7 +1,10 @@
-#include <logs.hpp>
+#include <runtime.hpp>
 
 #include <iostream>
+#include <logs.hpp>
 
 int main() {
-	LOG_INFO("Hello World");
+	auto runtime = std::make_unique<Runtime>();
+
+	runtime->run();
 }

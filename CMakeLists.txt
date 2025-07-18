@@ -19,12 +19,26 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glfw)
 
+target_compile_options(glfw PRIVATE
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:
+        -Wno-documentation
+    >
+)
+
 FetchContent_Declare(
     spdlog
     GIT_REPOSITORY https://github.com/gabime/spdlog.git
     GIT_TAG v1.15.3
+    SYSTEM
 )
 FetchContent_MakeAvailable(spdlog)
+
+target_compile_options(spdlog PRIVATE
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:
+        -Wno-unsafe-buffer-usage
+        -Wno-unsafe-buffer-usage-in-libc-call
+    >
+)
 
 FetchContent_Declare(
     glm
@@ -68,6 +82,29 @@ FetchContent_MakeAvailable(glm)
 #     GIT_TAG v5.3.0
 # )
 # FetchContent_MakeAvailable(jolt_physics)
+
+set(COMMON_COMPILE_OPTIONS
+    -Wpedantic
+    -Wshadow
+    -Wnull-dereference
+    -Wcast-align
+
+    #-Werror
+
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:
+        -Wall
+        #-Wextra
+        -Wno-c++98-compat
+        -Wno-c++98-compat-pedantic
+    >
+
+    $<$<CXX_COMPILER_ID:MSVC>:
+        /W4
+        /WX
+    >
+    
+    #$<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Debug>>:-fsanitize=address;-fsanitize=undefined;-fno-omit-frame-pointer>
+)
 
 add_subdirectory(src/modules/core)
 # add_subdirectory(src/modules/input)

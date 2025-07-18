@@ -88,3 +88,5 @@ compile_commands.json
 *.pdf
 
 *.local
+
+.clang-format
