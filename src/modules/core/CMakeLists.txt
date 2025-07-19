@@ -5,7 +5,7 @@ add_library(Core STATIC
     include/window/window.hpp
 )
 
-target_compile_options(Core PRIVATE ${MY_COMMON_COMPILE_OPTIONS})
+target_compile_options(Core PRIVATE ${COMMON_COMPILE_OPTIONS})
 
 target_include_directories(Core PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

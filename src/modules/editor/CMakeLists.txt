@@ -4,7 +4,7 @@ add_executable(Editor
     include/editor.hpp
 )
 
-target_compile_options(Editor PRIVATE ${MY_COMMON_COMPILE_OPTIONS})
+target_compile_options(Editor PRIVATE ${COMMON_COMPILE_OPTIONS})
 
 # Зависимости редактора.
 target_link_libraries(Editor PRIVATE

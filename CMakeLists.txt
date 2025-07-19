@@ -62,12 +62,13 @@ FetchContent_MakeAvailable(glm)
 # )
 # FetchContent_MakeAvailable(imgui)
 
-# FetchContent_Declare(
-#     entt
-#     GIT_REPOSITORY https://github.com/skypjack/entt.git
-#     GIT_TAG v3.15.0
-# )
-# FetchContent_MakeAvailable(entt)
+FetchContent_Declare(
+    entt
+    GIT_REPOSITORY https://github.com/skypjack/entt.git
+    GIT_TAG v3.15.0
+    
+)
+FetchContent_MakeAvailable(entt)
 
 # FetchContent_Declare(
 #     assimp
@@ -76,12 +77,15 @@ FetchContent_MakeAvailable(glm)
 # )
 # FetchContent_MakeAvailable(assimp)
 
-# FetchContent_Declare(
-#     jolt_physics
-#     GIT_REPOSITORY https://github.com/jrouwe/JoltPhysics.git
-#     GIT_TAG v5.3.0
-# )
-# FetchContent_MakeAvailable(jolt_physics)
+set(USE_STATIC_MSVC_RUNTIME_LIBRARY OFF CACHE BOOL "Use the static MSVC runtime library")
+
+FetchContent_Declare(
+    jolt_physics
+    GIT_REPOSITORY https://github.com/jrouwe/JoltPhysics.git
+    GIT_TAG v5.3.0
+    SOURCE_SUBDIR "Build"
+)
+FetchContent_MakeAvailable(jolt_physics)
 
 set(COMMON_COMPILE_OPTIONS
     -Wpedantic
@@ -107,11 +111,11 @@ set(COMMON_COMPILE_OPTIONS
 )
 
 add_subdirectory(src/modules/core)
+add_subdirectory(src/modules/ecs)
 # add_subdirectory(src/modules/input)
 # add_subdirectory(src/modules/renderer)
 # add_subdirectory(src/modules/assetmanagement)
-# add_subdirectory(src/modules/physics)
+add_subdirectory(src/modules/physics)
 # add_subdirectory(src/modules/animation)
-# add_subdirectory(src/modules/ecs)
 add_subdirectory(src/modules/runtime)
 add_subdirectory(src/modules/editor)
