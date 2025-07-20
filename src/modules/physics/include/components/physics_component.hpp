@@ -9,43 +9,23 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-namespace JPH
+struct PhysicsBodyComponent
 {
-class Shape;
-class Body;
-class BodyInterface;
-class PhysicsSystem;
-} // namespace JPH
+    JPH::BodyID body_id;
+    JPH::Body *body_ptr;
 
-struct RigidBodyComponent
-{
-    JPH::BodyID bodyID = JPH::BodyID();
-    JPH::EMotionType motionType = JPH::EMotionType::Dynamic;
-    float mass = 1.0f;
-    glm::vec3 linearVelocity = glm::vec3(0.0f);
-    glm::vec3 angularVelocity = glm::vec3(0.0f);
-    bool isAddedToPhysicsWorld = false;
-
-    RigidBodyComponent() = default;
-
-    RigidBodyComponent(JPH::EMotionType type, float m = 1.0f) : motionType(type), mass(m)
+    enum class BodyType
     {
-    }
-};
+        Static,
+        Dynamic,
+        Kinematic
+    };
+    BodyType type;
 
-struct ColliderComponent
-{
-    JPH::ShapeRefC shape;
+    PhysicsBodyComponent() = default;
 
-    ColliderComponent() = default;
-
-    ColliderComponent(JPH::ShapeRefC s) : shape(s)
+    PhysicsBodyComponent(JPH::BodyID id, JPH::Body *ptr, BodyType t) : body_id(id), body_ptr(ptr), type(t)
     {
-    }
-
-    ColliderComponent(const glm::vec3 &halfExtent)
-    {
-        shape = new JPH::BoxShape(JPH::Vec3(halfExtent.x, halfExtent.y, halfExtent.z));
     }
 };
 

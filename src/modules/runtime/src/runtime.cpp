@@ -6,6 +6,10 @@
 #include <window/window.hpp>
 #include <world/physics_world.hpp>
 
+#include <systems/physics_cleanup.hpp>
+#include <systems/physics_creation.hpp>
+#include <systems/physics_update.hpp>
+
 Runtime::Runtime()
 {
     logger::init();
@@ -13,7 +17,20 @@ Runtime::Runtime()
     ecsScene = std::make_unique<Scene>();
     physicsWorld = std::make_unique<PhysicsWorld>();
 
+    lastTime = std::chrono::high_resolution_clock::now();
+
     fixedUpdatePipeline = std::make_unique<Pipeline>();
+
+    physicsCreationSystem = std::make_unique<PhysicsCreationSystem>(*physicsWorld);
+    physicsUpdateSystem = std::make_unique<PhysicsUpdateSystem>(*physicsWorld);
+    physicsCleanupSystem = std::make_unique<PhysicsCleanupSystem>(ecsScene->get_registry(), *physicsWorld);
+
+    fixedUpdatePipeline->add_system([this](entt::registry &reg, float dt) { physicsCreationSystem->update(reg, dt); });
+
+    fixedUpdatePipeline->add_system([this](entt::registry &reg, float dt) { physicsUpdateSystem->update(reg, dt); });
+
+    auto test_entity = ecsScene->create_entity("Dynamic Cube");
+    ecsScene->get_registry().emplace<TransformComponent>(test_entity, 0.0f, 5.0f, 0.0f);
 }
 
 Runtime::~Runtime()
@@ -42,8 +59,7 @@ void Runtime::run()
 
         if (accumulator >= fixedTimeStep)
         {
-            // fixedUpdatePipeline->run(ecsScene->get_registry(), fixedTimeStep);
-            physicsWorld->run(fixedTimeStep);
+            fixedUpdatePipeline->run(ecsScene->get_registry(), fixedTimeStep);
             accumulator -= fixedTimeStep;
         }
     }

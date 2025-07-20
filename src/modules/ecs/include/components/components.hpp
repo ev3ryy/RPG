@@ -7,13 +7,17 @@
 
 struct TransformComponent
 {
-    glm::vec3 position = glm::vec3(0.0f);
-    glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-    glm::vec3 scale = glm::vec3(1.0f);
+    float position_x, position_y, position_z;
+    float rotation_x, rotation_y, rotation_z, rotation_w;
 
-    TransformComponent() = default;
-    TransformComponent(const glm::vec3 &pos, const glm::quat &rot, const glm::vec3 &s)
-        : position(pos), rotation(rot), scale(s)
+    TransformComponent()
+        : position_x(0.0f), position_y(0.0f), position_z(0.0f), rotation_x(0.0f), rotation_y(0.0f), rotation_z(0.0f),
+          rotation_w(1.0f)
+    {
+    }
+
+    TransformComponent(float px, float py, float pz, float rx = 0.0f, float ry = 0.0f, float rz = 0.0f, float rw = 1.0f)
+        : position_x(px), position_y(py), position_z(pz), rotation_x(rx), rotation_y(ry), rotation_z(rz), rotation_w(rw)
     {
     }
 };

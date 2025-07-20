@@ -11,6 +11,7 @@ add_library(ECS STATIC
     include/scene/scene.hpp
     include/components/components.hpp
     include/pipeline/pipeline.hpp
+    include/pipeline/ISystem.hpp
 )
 
 target_compile_options(ECS PRIVATE ${COMMON_COMPILE_OPTIONS})

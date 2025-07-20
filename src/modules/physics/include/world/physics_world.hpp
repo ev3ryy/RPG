@@ -196,6 +196,33 @@ class PhysicsWorld
 
     void run(float dt);
 
+    JPH::PhysicsSystem &getPhysicsSystem()
+    {
+        return physics_system;
+    }
+    const JPH::PhysicsSystem &getPhysicsSystem() const
+    {
+        return physics_system;
+    }
+
+    JPH::TempAllocatorImpl *getTempAllocator()
+    {
+        return temp_allocator;
+    }
+    const JPH::TempAllocatorImpl *getTempAllocator() const
+    {
+        return temp_allocator;
+    }
+
+    JPH::JobSystemThreadPool *getJobSystem()
+    {
+        return job_system;
+    }
+    const JPH::JobSystemThreadPool *getJobSystem() const
+    {
+        return job_system;
+    }
+
   private:
     TempAllocatorImpl *temp_allocator;
     JobSystemThreadPool *job_system;

@@ -9,6 +9,10 @@ class Scene;
 class Pipeline;
 class PhysicsWorld;
 
+class PhysicsCreationSystem;
+class PhysicsUpdateSystem;
+class PhysicsCleanupSystem;
+
 class Runtime
 {
   public:
@@ -24,6 +28,10 @@ class Runtime
     std::unique_ptr<Scene> ecsScene;
     std::unique_ptr<Pipeline> fixedUpdatePipeline;
     std::unique_ptr<PhysicsWorld> physicsWorld;
+
+    std::unique_ptr<PhysicsCreationSystem> physicsCreationSystem;
+    std::unique_ptr<PhysicsUpdateSystem> physicsUpdateSystem;
+    std::unique_ptr<PhysicsCleanupSystem> physicsCleanupSystem;
 
     std::chrono::high_resolution_clock::time_point lastTime;
 };
