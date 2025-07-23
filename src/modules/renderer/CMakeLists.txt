@@ -1,8 +1,10 @@
 add_library(IRenderer STATIC
     src/renderer.cpp
+    src/api_selector.cpp
     src/vulkan/vulkan_renderer.cpp
 
     include/renderer.hpp
+    include/api_selector.hpp
     include/vulkan_renderer.hpp
 )
 
